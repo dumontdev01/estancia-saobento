@@ -28,7 +28,7 @@ input,select,textarea,button{font:inherit}
 
 <a href="#conteudo" style="position:absolute;left:-9999px;top:8px;z-index:100;background:#faf7f0;color:#16291f;padding:10px 14px;border-radius:6px" style-focus="left:8px">Pular para o conteúdo</a>
 
-<header style="position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(20,40,29,0.84);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid rgba(194,163,107,0.18)">
+<header style="position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(20,40,29,0.96);border-bottom:1px solid rgba(194,163,107,0.18)">
   <div style="max-width:1320px;margin:0 auto;height:76px;padding:0 clamp(14px,4vw,48px);display:flex;align-items:center;justify-content:space-between;gap:clamp(10px,3vw,24px)">
     <a href="#inicio" aria-label="Estância São Bento — início" style="display:flex;align-items:center;color:#f5efe4;flex-shrink:0">
       <img src="assets/logo-estancia-480.png" alt="Estância São Bento — Uberaba, MG" width="93" height="64" style="height:clamp(48px,14vw,64px);width:auto;display:block;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.35))">
@@ -139,7 +139,7 @@ input,select,textarea,button{font:inherit}
 </section>
 
 <section id="video" data-screen-label="02b Vídeo" aria-label="Vídeo da Estância" style="position:relative;background:#10201a;color:#f5efe4;height:clamp(520px,56.25vw,860px);overflow:hidden">
-  <video ref="{{ videoRef }}" src="assets/estancia-video.mp4" muted="" loop="" autoPlay="" playsInline="" preload="auto" aria-label="Vídeo apresentando os ambientes da Estância São Bento" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></video>
+  <video ref="{{ videoRef }}" src="assets/estancia-video.mp4" muted="" loop="" autoPlay="" playsInline="" preload="metadata" aria-label="Vídeo apresentando os ambientes da Estância São Bento" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></video>
   <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(14,28,20,0.9) 0%,rgba(14,28,20,0.55) 30%,rgba(14,28,20,0) 60%),linear-gradient(180deg,rgba(14,28,20,0.35) 0%,rgba(14,28,20,0) 20%);pointer-events:none"></div>
   <div style="position:absolute;left:0;right:0;bottom:clamp(40px,6vw,88px);padding:0 clamp(16px,4vw,48px);pointer-events:none">
     <div data-reveal="" style="max-width:1320px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:24px">
@@ -285,7 +285,7 @@ input,select,textarea,button{font:inherit}
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:14px">
       <sc-for list="{{ galleryItems }}" as="g" hint-placeholder-count="9">
         <figure style="margin:0;position:relative;aspect-ratio:4/3;border-radius:8px;overflow:hidden;background:#ece5d6">
-          <image-slot id="{{ g.slot }}" shape="rect" src="{{ g.src }}" placeholder="{{ g.placeholder }}"></image-slot>
+          <img data-src="{{ g.src }}" alt="{{ g.caption }}" loading="lazy" decoding="async" width="800" height="600" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
           <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(14,28,20,0.82) 0%,rgba(14,28,20,0.35) 32%,rgba(14,28,20,0) 58%);pointer-events:none"></div>
           <div aria-hidden="true" style="position:absolute;inset:10px;border:1px solid rgba(227,201,152,0.35);border-radius:4px;pointer-events:none"></div>
           <figcaption style="position:absolute;left:24px;right:76px;bottom:22px;display:flex;flex-direction:column;gap:6px;pointer-events:none">
@@ -469,6 +469,7 @@ class Component extends DCLogic {
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       let cur = 0;
       this.slideTimer = setInterval(() => {
+        if (document.hidden) return;
         const imgs = document.querySelectorAll('#celebracoes [data-slide]');
         if (!imgs.length) return;
         cur = (cur + 1) % imgs.length;
@@ -485,7 +486,10 @@ class Component extends DCLogic {
     v.muted = true; v.defaultMuted = true; v.loop = true;
     const play = () => v.play().catch(() => {});
     v.addEventListener('ended', () => { v.currentTime = 0; play(); });
-    play();
+    if ('IntersectionObserver' in window) {
+      this.vio = new IntersectionObserver(([en]) => { if (en.isIntersecting) play(); else v.pause(); }, { threshold: 0.15 });
+      this.vio.observe(v);
+    } else play();
   }
   componentDidUpdate() { this.syncSrc(); }
   syncSrc() {
