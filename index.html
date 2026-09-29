@@ -14,9 +14,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
-<script src="./image-slot.js"></script>
 <style>
-html,body{margin:0;padding:0;overflow-x:clip;background:#faf7f0;color:#22251f;font-family:'Hanken Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+html{overflow-x:clip;-webkit-text-size-adjust:100%}body{overflow-x:clip;overscroll-behavior-y:auto;touch-action:pan-x pan-y pinch-zoom}html,body{margin:0;padding:0;background:#faf7f0;color:#22251f;font-family:'Hanken Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 *{box-sizing:border-box}
 @media (prefers-reduced-motion: no-preference){html{scroll-behavior:smooth}}
 a{color:#8e5936;text-decoration:none}
@@ -73,12 +72,12 @@ input,select,textarea,button{font:inherit}
   <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
     <div style="position:relative;height:clamp(520px,42vw,800px);overflow:hidden">
       <div style="position:absolute;top:0;left:0;bottom:0;width:74%">
-        <image-slot id="hero-patio-v2" shape="rect" src="./assets/hero-patio.webp" placeholder="Foto real: pátio, gramado e construção"></image-slot>
+        <img src="./assets/hero-patio.webp" alt="Pátio, gramado e construção da Estância São Bento" fetchpriority="high" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
       </div>
       <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(16,34,24,0.78) 0%,rgba(16,34,24,0.5) 24%,rgba(16,34,24,0.12) 44%,rgba(16,34,24,0) 58%),linear-gradient(180deg,rgba(16,34,24,0.5) 0%,rgba(16,34,24,0) 24%);pointer-events:none"></div>
       <div style="position:absolute;top:0;right:0;bottom:0;width:34%;background:#faf7f0;clip-path:polygon(16% 0,100% 0,100% 100%,0 100%);box-shadow:0 0 30px rgba(0,0,0,0.3)">
         <div style="position:absolute;inset:0;clip-path:polygon(calc(16% + 7px) 0,100% 0,100% 100%,7px 100%)">
-          <image-slot id="hero-piscina-v2" shape="rect" src="./assets/hero-piscina.webp" placeholder="Foto real: piscina"></image-slot>
+          <img src="./assets/hero-piscina.webp" alt="Piscina da Estância São Bento" fetchpriority="high" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
         </div>
       </div>
       <div style="position:absolute;left:0;right:0;top:76px;bottom:0;pointer-events:none;display:flex;align-items:center">
@@ -95,7 +94,7 @@ input,select,textarea,button{font:inherit}
   <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
     <div style="position:relative;height:max(560px,82svh)">
       <div style="position:absolute;inset:0">
-        <image-slot id="hero-patio-v2" shape="rect" src="./assets/hero-patio.webp" placeholder="Foto real: pátio, gramado e construção"></image-slot>
+        <img src="./assets/hero-patio.webp" alt="Pátio, gramado e construção da Estância São Bento" fetchpriority="high" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
       </div>
       <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(16,34,24,0.92) 0%,rgba(16,34,24,0.6) 40%,rgba(16,34,24,0.1) 70%,rgba(16,34,24,0.5) 100%);pointer-events:none"></div>
       <div style="position:absolute;left:20px;right:20px;bottom:72px;pointer-events:none">
@@ -106,7 +105,7 @@ input,select,textarea,button{font:inherit}
     </div>
     <div style="position:relative;height:280px;margin-top:-44px;background:#faf7f0;clip-path:polygon(0 16%,100% 0,100% 100%,0 100%)">
       <div style="position:absolute;inset:0;clip-path:polygon(0 calc(16% + 6px),100% 6px,100% 100%,0 100%)">
-        <image-slot id="hero-piscina-v2" shape="rect" src="./assets/hero-piscina.webp" placeholder="Foto real: piscina"></image-slot>
+        <img src="./assets/hero-piscina.webp" alt="Piscina da Estância São Bento" fetchpriority="high" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
       </div>
     </div>
   </sc-if>
@@ -122,7 +121,7 @@ input,select,textarea,button{font:inherit}
       <sc-for list="{{ eventCards }}" as="card" hint-placeholder-count="3">
         <article data-reveal="" style="position:relative;height:clamp(380px,34vw,470px);border-radius:10px;overflow:hidden;background:#1f3a2c;box-shadow:0 1px 2px rgba(22,41,31,0.08);transition:transform .35s ease,box-shadow .35s ease" style-hover="transform:translateY(-4px);box-shadow:0 18px 40px -18px rgba(22,41,31,0.45)">
           <div style="position:absolute;inset:0">
-            <image-slot id="{{ card.slot }}" shape="rect" src="{{ card.src }}" placeholder="{{ card.placeholder }}"></image-slot>
+            <img data-src="{{ card.src }}" alt="{{ card.placeholder }}" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
           </div>
           <div style="position:absolute;left:0;right:0;bottom:0;height:62%;background:linear-gradient(0deg,rgba(14,28,20,0.86) 0%,rgba(14,28,20,0.45) 45%,rgba(14,28,20,0) 100%);pointer-events:none"></div>
           <div style="position:absolute;left:clamp(22px,2vw,30px);right:22px;bottom:clamp(24px,2.2vw,32px);pointer-events:none">
@@ -139,7 +138,7 @@ input,select,textarea,button{font:inherit}
 </section>
 
 <section id="video" data-screen-label="02b Vídeo" aria-label="Vídeo da Estância" style="position:relative;background:#10201a;color:#f5efe4;height:clamp(520px,56.25vw,860px);overflow:hidden">
-  <video ref="{{ videoRef }}" src="assets/estancia-video.mp4" muted="" loop="" autoPlay="" playsInline="" preload="metadata" aria-label="Vídeo apresentando os ambientes da Estância São Bento" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></video>
+  <video ref="{{ videoRef }}" src="assets/estancia-video.mp4" muted="" loop="" autoPlay="" playsInline="" preload="none" aria-label="Vídeo apresentando os ambientes da Estância São Bento" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block"></video>
   <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(14,28,20,0.9) 0%,rgba(14,28,20,0.55) 30%,rgba(14,28,20,0) 60%),linear-gradient(180deg,rgba(14,28,20,0.35) 0%,rgba(14,28,20,0) 20%);pointer-events:none"></div>
   <div style="position:absolute;left:0;right:0;bottom:clamp(40px,6vw,88px);padding:0 clamp(16px,4vw,48px);pointer-events:none">
     <div data-reveal="" style="max-width:1320px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:24px">
@@ -163,14 +162,14 @@ input,select,textarea,button{font:inherit}
       <a href="#estrutura" style="display:inline-flex;gap:10px;color:#8e5936;font-size:16px;padding:8px 2px;border-bottom:1px solid #c2a36b" style-hover="color:#16291f">Ver a estrutura <span aria-hidden="true">→</span></a>
     </div>
     <div style="display:grid;grid-template-columns:1.25fr 1fr;grid-template-rows:auto auto;gap:14px">
-      <div data-reveal="" style="grid-row:span 2;aspect-ratio:3/4;border-radius:10px;overflow:hidden">
-        <image-slot id="espaco-1-v2" shape="rect" src="./assets/galeria/05-mesa-de-eventos.webp" placeholder="Foto real: área coberta"></image-slot>
+      <div data-reveal="" style="position:relative;grid-row:span 2;aspect-ratio:3/4;border-radius:10px;overflow:hidden">
+        <img src="./assets/galeria/05-mesa-de-eventos.webp" alt="área coberta" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
       </div>
-      <div data-reveal="" style="aspect-ratio:1/1;border-radius:10px;overflow:hidden;align-self:end">
-        <image-slot id="espaco-2-v2" shape="rect" src="./assets/galeria/01-vista-aerea.webp" placeholder="Foto real: vista aérea"></image-slot>
+      <div data-reveal="" style="position:relative;aspect-ratio:1/1;border-radius:10px;overflow:hidden;align-self:end">
+        <img src="./assets/galeria/01-vista-aerea.webp" alt="vista aérea" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
       </div>
-      <div data-reveal="" style="aspect-ratio:1/1;border-radius:10px;overflow:hidden">
-        <image-slot id="espaco-3-v2" shape="rect" src="./assets/galeria/03-varanda.webp" placeholder="Foto real: varanda"></image-slot>
+      <div data-reveal="" style="position:relative;aspect-ratio:1/1;border-radius:10px;overflow:hidden">
+        <img src="./assets/galeria/03-varanda.webp" alt="varanda" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
       </div>
     </div>
   </div>
@@ -227,7 +226,7 @@ input,select,textarea,button{font:inherit}
     <div data-reveal="" style="position:relative;aspect-ratio:3/2;border-radius:12px;overflow:hidden;box-shadow:0 30px 60px -32px rgba(22,41,31,0.45)">
       <sc-if value="{{ hasSlides }}" hint-placeholder-val="{{ false }}">
         <sc-for list="{{ slides }}" as="sl" hint-placeholder-count="0">
-          <img data-slide="" data-src="{{ sl.src }}" alt="{{ sl.alt }}" decoding="async" style="{{ sl.style }}">
+          <img data-slide="" data-src="{{ sl.src }}" alt="{{ sl.alt }}" loading="lazy" decoding="async" style="{{ sl.style }}">
         </sc-for>
       </sc-if>
     </div>
@@ -432,7 +431,7 @@ input,select,textarea,button{font:inherit}
 <sc-if value="{{ hasLightbox }}" hint-placeholder-val="{{ false }}">
   <div role="dialog" aria-modal="true" aria-label="{{ lightbox.caption }}" onClick="{{ closeLightbox }}" style="position:fixed;inset:0;z-index:80;background:rgba(10,20,14,0.92);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:clamp(16px,4vw,56px);gap:16px">
     <div onClick="{{ stop }}" style="position:relative;width:min(1200px,100%);height:min(78vh,800px)">
-      <image-slot id="{{ lightbox.slot }}" shape="rounded" radius="8" fit="contain" src="{{ lightbox.src }}" placeholder="{{ lightbox.placeholder }}"></image-slot>
+      <img data-src="{{ lightbox.src }}" alt="{{ lightbox.caption }}" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;border-radius:8px">
     </div>
     <div onClick="{{ stop }}" style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:12px 16px;color:#f5efe4;max-width:100%">
       <button type="button" onClick="{{ prevImg }}" aria-label="Foto anterior" style="width:48px;height:48px;border-radius:6px;border:1px solid rgba(245,239,228,0.35);background:none;color:#f5efe4;cursor:pointer;font-size:18px">←</button>
